@@ -1,0 +1,19 @@
+{
+  "name": "grupo4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpascual2020343/Grupo4Nodejs.git"
+  },
+  "author": "Grupo4",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fpascual2020343/Grupo4Nodejs/issues"
+  },
+  "homepage": "https://github.com/fpascual2020343/Grupo4Nodejs#readme"
+}
