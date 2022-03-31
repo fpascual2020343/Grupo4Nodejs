@@ -8,8 +8,6 @@ function agregarEmpresa(req, res){
     const parametros = req.body; 
     const modeloEmpresa = new Empresa();
 
-
-
 if(req.user.rol == 'Administrador'){
     modeloEmpresa.nombre = parametros.nombre;
     modeloEmpresa.direccion = parametros.direccion; 
