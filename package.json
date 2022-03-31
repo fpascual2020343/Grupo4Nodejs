@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,14 @@
   "bugs": {
     "url": "https://github.com/fpascual2020343/Grupo4Nodejs/issues"
   },
-  "homepage": "https://github.com/fpascual2020343/Grupo4Nodejs#readme"
+  "homepage": "https://github.com/fpascual2020343/Grupo4Nodejs#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "jwt-simple": "^0.5.6",
+    "moment": "^2.29.1",
+    "mongoose": "^6.2.9",
+    "nodemon": "^2.0.15"
+  }
 }
