@@ -6,18 +6,36 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
+<<<<<<< HEAD
+=======
+
+>>>>>>> Daniel
   },
   "author": "Grupo 4",
   "license": "ISC",
+<<<<<<< HEAD
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
     "cors": "^2.8.5",
     "excel4node": "^1.7.2",
+=======
+  "bugs": {
+    "url": "https://github.com/fpascual2020343/Grupo4Nodejs/issues"
+  },
+  "homepage": "https://github.com/fpascual2020343/Grupo4Nodejs#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
+    "cors": "^2.8.5",
+>>>>>>> Daniel
     "express": "^4.17.3",
     "jwt-simple": "^0.5.6",
     "moment": "^2.29.1",
     "mongoose": "^6.2.9",
+<<<<<<< HEAD
     "nodemon": "^2.0.15",
     "pdfkit": "^0.13.0"
+=======
+    "nodemon": "^2.0.15"
+>>>>>>> Daniel
   }
 }

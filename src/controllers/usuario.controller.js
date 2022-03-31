@@ -13,7 +13,11 @@ function UsuarioDefault(req, res) {
             modeloUsuario.nombre = "SuperAdmin";
             modeloUsuario.email = "SuperAdmin@gmail.com";
             modeloUsuario.password = "123456";
+<<<<<<< HEAD
             modeloUsuario.rol = "SuperAdmin";
+=======
+            modeloUsuario.rol = "Administrador";
+>>>>>>> Daniel
             bcrypt.hash(modeloUsuario.password, null, null, (err, passwordEncryptada) => {
                 modeloUsuario.password = passwordEncryptada
                 modeloUsuario.save((err, usuarioGuardado) => {
@@ -31,7 +35,11 @@ function UsuarioDefault(req, res) {
 function Login(req, res) {
     var parametros = req.body;
 
+<<<<<<< HEAD
     Usuario.findOne({ email: parametros.email}, (err, usuarioencontrado) => {
+=======
+    Usuario.findOne({ nombre: parametros.nombre}, (err, usuarioencontrado) => {
+>>>>>>> Daniel
         if (err) return res.status(500).send({ mensaje: 'error en la peticion ' });
         if (usuarioencontrado) {
             bcrypt.compare(parametros.password, usuarioencontrado.password, (err, Verificaciondepasswor) => {
