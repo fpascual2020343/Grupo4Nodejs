@@ -8,9 +8,7 @@ function agregarEmpresa(req, res){
     const parametros = req.body; 
     const modeloEmpresa = new Empresa();
 
-
-
-if(req.user.rol == 'Administrador'){
+if(req.user.rol == 'SuperAdmin'){
     modeloEmpresa.nombre = parametros.nombre;
     modeloEmpresa.direccion = parametros.direccion; 
     modeloEmpresa.descripcion = parametros.descripcion; 
@@ -33,7 +31,7 @@ if(req.user.rol == 'Administrador'){
 function editarEmpresa(req, res){
     const parametros = req.body; 
     const idEmpresa = req.params.idEmpresa;
-    if(req.user.rol = 'Administrador'){
+    if(req.user.rol = 'SuperAdmin'){
 
         Empresa.findByIdAndUpdate(idEmpresa, parametros, {new: true}, (err, empresaActualizada)=>{
             if(err) return res.status(500).send({mensaje: 'Hubo en la peticion'});
@@ -50,7 +48,7 @@ function editarEmpresa(req, res){
 function eliminarEmpresa(req, res){
     const idEmpresa = req.params.idEmpresa; 
 
-    if(req.user.rol == 'Administrador'){
+    if(req.user.rol == 'SuperAdmin'){
         Empresa.findByIdAndDelete({_id: idEmpresa}, (err, empresaEliminada)=>{
             if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'});
             if(!empresaEliminada) return res.status(500).send({mensaje: 'Hubo un error al eliminar la empresa'}); 
@@ -64,7 +62,7 @@ function eliminarEmpresa(req, res){
 }
 function obtenerEmpresas(req, res){
 
-    if(req.user.rol == 'Administrador'){
+    if(req.user.rol == 'SuperAdmin'){
 
         Empresa.find({}, (err, empresaEncontradas)=>{
             if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
