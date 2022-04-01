@@ -10,7 +10,6 @@ function agregarEmpresa(req, res){
 
 
 
-if(req.user.rol == 'Administrador'){
     modeloEmpresa.nombre = parametros.nombre;
     modeloEmpresa.direccion = parametros.direccion; 
     modeloEmpresa.descripcion = parametros.descripcion; 
@@ -23,9 +22,6 @@ if(req.user.rol == 'Administrador'){
         return res.status(200).send({empresa: empresaGuardada})
     })
 
-}else{
-    return res.status(500).send({mensaje: 'Solo los administradores pueden agregar empresas'})
-}
 
    
 
@@ -64,7 +60,6 @@ function eliminarEmpresa(req, res){
 }
 function obtenerEmpresas(req, res){
 
-    if(req.user.rol == 'Administrador'){
 
         Empresa.find({}, (err, empresaEncontradas)=>{
             if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
@@ -73,11 +68,7 @@ function obtenerEmpresas(req, res){
             return res.status(200).send({empresa: empresaEncontradas})
         })
 
-    }else{
-
-        return res.status(500).send({mensaje: 'Solo los administradores pueden ver las categorias'})
-
-    }
+  
 }
 module.exports = {
     agregarEmpresa,
