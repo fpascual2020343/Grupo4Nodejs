@@ -21,7 +21,6 @@ const EmpresaSchema = Schema({
             precioProducto: Number,
             stock: Number
         }]
-        
 
 
 })
