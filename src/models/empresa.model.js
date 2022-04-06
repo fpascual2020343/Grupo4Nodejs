@@ -7,6 +7,7 @@ const EmpresaSchema = Schema({
     direccion: String, 
     descripcion: String,
     rol: String, 
+    password: String,
     sucursales: [{
         nombre: String, 
         direccion: String, 

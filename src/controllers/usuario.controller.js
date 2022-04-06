@@ -1,4 +1,5 @@
 const Usuario = require('../models/usuario.model');
+const Empresa = require('../models/empresa.model')
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('../services/jwt');
 
@@ -31,6 +32,8 @@ function UsuarioDefault(req, res) {
 function Login(req, res) {
     var parametros = req.body;
 
+    
+
     Usuario.findOne({ nombre: parametros.nombre}, (err, usuarioencontrado) => {
         if (err) return res.status(500).send({ mensaje: 'error en la peticion ' });
         if (usuarioencontrado) {
@@ -43,7 +46,8 @@ function Login(req, res) {
             })
 
         } else {
-            return res.status(500).send({ mensaje: 'El usuario nose ha podido identificar' })
+          
+        
         }
     })
 }
