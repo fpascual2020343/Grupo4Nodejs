@@ -1,4 +1,5 @@
 const Usuario = require('../models/usuario.model');
+const Empresa = require('../models/empresa.model')
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('../services/jwt');
 
@@ -31,24 +32,42 @@ function UsuarioDefault(req, res) {
 function Login(req, res) {
     var parametros = req.body;
 
-    Usuario.findOne({ nombre: parametros.nombre}, (err, usuarioencontrado) => {
-        if (err) return res.status(500).send({ mensaje: 'error en la peticion ' });
-        if (usuarioencontrado) {
-            bcrypt.compare(parametros.password, usuarioencontrado.password, (err, Verificaciondepasswor) => {
-                if (Verificaciondepasswor) {
-                    return res.status(200).send({ token: jwt.crearToken(usuarioencontrado) })
+    Usuario.findOne({ nombre : parametros.nombre }, (err, usuarioEncontrado) => {
+        if(err) return res.status(500).send({ mensaje: 'Error en la peticion'});
+        if (usuarioEncontrado){
+
+            bcrypt.compare(parametros.password, usuarioEncontrado.password, 
+                (err, verificacionPassword) => {
+                    if (verificacionPassword) {
+                        return res.status(200)
+                            .send({ token: jwt.crearToken(usuarioEncontrado)})
+                    } else {
+                        return res.status(500)
+                            .send({ mensaje: 'La contrasena no coincide.'})
+                    }
+                })
+        } else {
+            Empresa.findOne({nombre: parametros.nombre }, (err, empresaEncontrado) => {
+                if(err) return res.status(500).send({ mensaje: 'Error en la peticion'});
+                if (empresaEncontrado){
+                    bcrypt.compare(parametros.password, empresaEncontrado.password, 
+                        (err, verificacionPassword) => {
+                            if (verificacionPassword) {
+                                return res.status(200)
+                                    .send({ token: jwt.crearToken(empresaEncontrado)})
+                            } else {
+                                return res.status(500)
+                                    .send({ mensaje: 'La contraseña no coincide'})
+                            }
+                        })
                 } else {
-                    return res.status(500).send({ mensaje: 'la contraseña no coincide' })
+                    return res.status(500)
+                        .send({ mensaje: 'El usuario, no se ha podido identificar'})
                 }
             })
-
-        } else {
-            return res.status(500).send({ mensaje: 'El usuario nose ha podido identificar' })
         }
-    })
+    })    
 }
-
-
 module.exports = {
     UsuarioDefault,
     Login
