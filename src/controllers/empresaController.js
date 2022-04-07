@@ -11,10 +11,12 @@ function agregarEmpresa(req, res){
 
     bcrypt.hash(parametros.password, null, null, (err, passwordEncryptada) => {
 
+
     modeloEmpresa.nombre = parametros.nombre;
     modeloEmpresa.direccion = parametros.direccion; 
     modeloEmpresa.descripcion = parametros.descripcion; 
     modeloEmpresa.rol = 'Empresa';   
+
         modeloEmpresa.password = passwordEncryptada
         modeloEmpresa.save((err, empresaGuardada)=>{
             if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
