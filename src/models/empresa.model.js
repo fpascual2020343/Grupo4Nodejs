@@ -10,12 +10,7 @@ const EmpresaSchema = Schema({
     password: String,
     sucursales: [{
         nombre: String, 
-        direccion: String, 
-        productos: [{
-            nombreProducto: String,
-            precioProducto: Number,
-            stock: Number
-        }]
+        direccion: String,    
     }],
        productos: [{
             nombreProducto: String,
