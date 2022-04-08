@@ -3,11 +3,13 @@ const bcrypt = require('bcrypt-nodejs');
 const jwt = require('../services/jwt')
 const res = require('express/lib/response');
 const Empresa = require('../models/empresa.model')
+const Usuario = require('../models/usuario.model')
 
 function agregarEmpresa(req, res) {
     const parametros = req.body;
     const modeloEmpresa = new Empresa();
 
+<<<<<<< HEAD
     modeloEmpresa.nombre = parametros.nombre;
     modeloEmpresa.direccion = parametros.direccion;
     modeloEmpresa.descripcion = parametros.descripcion;
@@ -18,7 +20,26 @@ function agregarEmpresa(req, res) {
         if (!empresaGuardada) return res.status(500).send({ mensaje: 'Hubo un error al agregar la empresa' })
 
         return res.status(200).send({ empresa: empresaGuardada })
+=======
+    bcrypt.hash(parametros.password, null, null, (err, passwordEncryptada) => {
+
+
+    modeloEmpresa.nombre = parametros.nombre;
+    modeloEmpresa.direccion = parametros.direccion; 
+    modeloEmpresa.descripcion = parametros.descripcion; 
+    modeloEmpresa.rol = 'Empresa';   
+
+        modeloEmpresa.password = passwordEncryptada
+        modeloEmpresa.save((err, empresaGuardada)=>{
+            if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
+            if(!empresaGuardada) return res.status(500).send({mensaje: 'Hubo un error al agregar la empresa'})
+    
+            return res.status(200).send({empresa: empresaGuardada})
+        })
+>>>>>>> Daniel
     })
+    
+    
 
 
 
@@ -56,18 +77,36 @@ function eliminarEmpresa(req, res) {
     }
 
 }
+<<<<<<< HEAD
 function obtenerEmpresas(req, res) {
+=======
+function obtenerEmpresas(req, res){
+
+>>>>>>> Daniel
 
     Empresa.find({}, (err, empresaEncontradas) => {
         if (err) return res.status(500).send({ mensaje: 'Hubo un error en la peticion' })
         if (!empresaEncontradas) return res.status(500).send({ mensaje: 'Hubo un error al obtener las empresas' })
 
+<<<<<<< HEAD
         return res.status(200).send({ empresa: empresaEncontradas })
     })
 }
+=======
+            return res.status(200).send({empresa: empresaEncontradas})
+        })
+
+  
+}
+
+
+
+
+>>>>>>> Daniel
 module.exports = {
     agregarEmpresa,
     editarEmpresa,
     eliminarEmpresa,
-    obtenerEmpresas
+    obtenerEmpresas,
+     
 }

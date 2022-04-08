@@ -8,4 +8,6 @@ api.put('/editarEmpresa/:idEmpresa', md_autenticacion.Auth, empresaControlador.e
 api.get('/obtenerEmpresas', empresaControlador.obtenerEmpresas);//obtener empresas
 api.delete('/eliminarEmpresa/:idEmpresa', md_autenticacion.Auth, empresaControlador.eliminarEmpresa); //eliminar empresas
 
+
+
 module.exports = api;
