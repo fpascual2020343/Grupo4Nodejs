@@ -37,7 +37,14 @@ function Login(req, res) {
         if (usuarioencontrado) {
             bcrypt.compare(parametros.password, usuarioencontrado.password, (err, Verificaciondepasswor) => {
                 if (Verificaciondepasswor) {
-                    return res.status(200).send({ token: jwt.crearToken(usuarioencontrado) })
+                    if(parametros.obtenerToken == 'true'){
+                        return res.status(200).send({ token: jwt.crearToken(usuarioencontrado) })
+                    } else {
+                        usuarioencontrado.password = undefined;
+
+                        return res.status(200)
+                            .send({ usuario: usuarioencontrado })
+                    }
                 } else {
                     return res.status(500).send({ mensaje: 'la contraseña no coincide' })
                 }
