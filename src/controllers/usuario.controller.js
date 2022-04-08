@@ -31,7 +31,8 @@ function UsuarioDefault(req, res) {
 function Login(req, res) {
     var parametros = req.body;
 
-    Usuario.findOne({ email: parametros.email}, (err, usuarioencontrado) => {
+    Usuario.findOne({ nombre: parametros.nombre}, (err, usuarioencontrado) => {
+
         if (err) return res.status(500).send({ mensaje: 'error en la peticion ' });
         if (usuarioencontrado) {
             bcrypt.compare(parametros.password, usuarioencontrado.password, (err, Verificaciondepasswor) => {
