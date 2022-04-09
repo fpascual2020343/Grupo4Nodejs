@@ -19,13 +19,40 @@ function UsuarioDefault(req, res) {
                 modeloUsuario.save((err, usuarioGuardado) => {
                     if (err) console.log({ mensaje: 'error en la peticion ' })
                     if (!usuarioGuardado) console.log({ mensaje: 'error al crear usuario por defecto ' })
-                    console.log({ Usuario: usuarioGuardado })
+                    console.log(usuarioGuardado )
 
                 })
             })
         }
     })
+}
 
+function Registro(req, res) {
+    var modeloUsuario = new Usuario();
+    var parametros = req.body;
+    Usuario.find({ email: parametros.email, nombre: parametros.nombre}, (err, usuarioEncontrado) => {
+        if (usuarioEncontrado.length > 0) {
+            console.log(usuarioEncontrado)
+            return res.status(500).send({ mensaje: "ya existe este usuario" })
+        } else {
+            
+                modeloUsuario.nombre =  parametros.nombre;
+                modeloUsuario.email =  parametros.email;
+                modeloUsuario.password =  parametros.password;
+                modeloUsuario.rol = "Empresa";
+                bcrypt.hash(modeloUsuario.password, null, null, (err, passwordEncryptada) => {
+                    modeloUsuario.password = passwordEncryptada
+                    modeloUsuario.save((err, usuarioGuardado) => {
+                        if (err) console.log({ mensaje: 'error en la peticion ' })
+                        if (!usuarioGuardado) console.log({ mensaje: 'error al crear el usuario' })
+                        return res.status(200).send({ Usuario: usuarioGuardado })
+
+                    })
+            })
+            
+            
+        }
+    })
 }
 
 function Login(req, res) {
@@ -58,5 +85,6 @@ function Login(req, res) {
 
 module.exports = {
     UsuarioDefault,
-    Login
+    Login,
+    Registro
 }
