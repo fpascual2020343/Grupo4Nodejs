@@ -1,24 +1,24 @@
+
 const jwt_simple = require('jwt-simple');
 const moment = require('moment');
-const secret = 'clave_secreta_IN6BV';
+const claveSecreta = "clave_secreta_IN6BV";
 
-exports.Auth = function(req, res, next) {
-    if ( !req.headers.authorization ) {
-        return res.status(404)
-            .send({ mensaje: 'La peticion, no posee la cabecera de Autenticacion' });
+exports.Auth = function (req, res, next) {
+    if( !req.headers.authorization ){
+        return res.status(500).send({ mensaje: "La peticion no tiene la cabecera de Authorization" });
     }
 
     var token = req.headers.authorization.replace(/['"]+/g, '');
 
     try {
-        var payload = jwt_simple.decode(token, secret);
+        var payload = jwt_simple.decode(token, claveSecreta);
+        console.log(payload);
+        // EXP = variable que contiene el tiempo de expiracion del token
         if(payload.exp <= moment().unix()){
-            return res.status(404)
-                .send({ mensaje:'El token ya ha expirado' });
+            return res.status(500).send({ mensaje: "El token ha expirado."});
         }
     } catch (error) {
-        return res.status(500)
-            .send({ mensaje: 'El token no es valido'})
+        return res.status(500).send({ mensaje: "El token no es valido."})
     }
 
     req.user = payload;

@@ -94,18 +94,15 @@ const idEmpresaa = req.user.sub;
 
 }
 function obtenerSucursales(req, res){
-    const idEmpresa = req.user.sub; 
-    const rolEmpresa = req.user.rol;
-    if(rolEmpresa == 'Empresa'){
-        Sucursales.find({}, (err, sucursalesEncontradas)=>{
+    const idSucursal = req.params.idSucursal; 
+    const idEmpresaa = req.user.sub;
+
+        Sucursales.find({idEmpresa: idEmpresaa}, (err, sucursalesEncontradas)=>{
             if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
             if(!sucursalesEncontradas) return res.status(500).send({mensaje: 'Hubo un error al buscar las sucursales'})
             return res.status(200).send({sucursales: sucursalesEncontradas})
         })
-    }else{
-        return res.status(500).send({mensaje: 'Solo las empressas pueden ver las sucursales que poseen'})
-    }
-
+    
 
 }
 
@@ -160,6 +157,16 @@ function obtenerProductos(req, res){
         return res.status(200).send({ productos: productosEncontrados})
     })
 }
+function ObtenerSucursalId (req, res) {
+    const idSucursal = req.params.idSucursal;
+
+    Sucursales.findById(idSucursal, (err, sucursalEncontrada)=>{
+        if(err) return res.status(500).send({ mensaje: 'Error en la peticion' });
+        if(!sucursalEncontrada) return res.status(500).send({ mensaje: 'Error al obtener el Producto'});
+
+        return res.status(200).send({ sucursal: sucursalEncontrada })
+    })
+}
 
 module.exports = {
     obtenerSucursales, 
@@ -167,7 +174,8 @@ module.exports = {
     editarSucursal, 
     agregarSucursal,
     agregarProductos,
-    obtenerProductos
+    obtenerProductos,
+    ObtenerSucursalId
 }
 
 
