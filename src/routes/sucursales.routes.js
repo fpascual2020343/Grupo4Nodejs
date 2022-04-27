@@ -8,7 +8,6 @@ api.post('/agregarSucursal', md_autenticacion.Auth, sucursalesControlador.agrega
 api.put('/editarSucursal/:idSucursal', md_autenticacion.Auth, sucursalesControlador.editarSucursal);//editar sucursal
 api.get('/obtenerSucursales', md_autenticacion.Auth,sucursalesControlador.obtenerSucursales);//obtener sucursales
 api.delete('/eliminarSucursales/:idSucursal', md_autenticacion.Auth, sucursalesControlador.eliminarSucursal); //eliminar sucursales
-api.put('/agregarProductos/:idSucursal', md_autenticacion.Auth, sucursalesControlador.agregarProductos);//agregar productos
 api.get('/obtenerProductos/:idSucursal', md_autenticacion.Auth, sucursalesControlador.obtenerSucursales);//obtener productos
 api.get('/obtenerSucursal/:idSucursal', md_autenticacion.Auth,sucursalesControlador.ObtenerSucursalId);//obtener sucursales
 

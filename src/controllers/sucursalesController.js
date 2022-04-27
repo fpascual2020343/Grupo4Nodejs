@@ -107,31 +107,6 @@ function obtenerSucursales(req, res){
 }
 
 
-function agregarProductos(req, res){
-const parametros = req.body;
-const idSucursal = req.params.idSucursal; 
-const idUsuario = req.user.rol;
-
-if(idUsuario == 'Empresa'){
-
-    Sucursales.findByIdAndUpdate(idSucursal, {$push: {productos:{nombreProducto: parametros.nombre, precioProducto: parametros.precio, stock: parametros.stock} }}, {new: true}, (err, productoAgregado)=>{
-    
-        if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
-        if(!productoAgregado) return res.status(500).send({mensaje: 'Hubo un error al editar la sucursal'})
-
-        return res.status(200).send({producto: productoAgregado})
-    })
-
-
-}else{
-
-
-    return res.status(500).send({mensaje: 'Solo la empresa puede agregar productos'})
-
-}
-
-
-}
 function obtenerProductos(req, res){
 
     var parametros = req.body;
@@ -173,7 +148,6 @@ module.exports = {
     eliminarSucursal, 
     editarSucursal, 
     agregarSucursal,
-    agregarProductos,
     obtenerProductos,
     ObtenerSucursalId
 }
