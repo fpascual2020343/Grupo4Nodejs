@@ -11,27 +11,35 @@ function agregarEmpresa(req, res){
     const parametros = req.body; 
     const modeloEmpresa = new Empresa();
 
-    bcrypt.hash(parametros.password, null, null, (err, passwordEncryptada) => {
+    if(req.user.rol == 'Administrador'){
+        bcrypt.hash(parametros.password, null, null, (err, passwordEncryptada) => {
 
 
-    modeloEmpresa.nombre = parametros.nombre;
-    modeloEmpresa.direccion = parametros.direccion; 
-    modeloEmpresa.descripcion = parametros.descripcion; 
-    modeloEmpresa.rol = 'Empresa';   
+            modeloEmpresa.nombre = parametros.nombre;
+            modeloEmpresa.direccion = parametros.direccion; 
+            modeloEmpresa.descripcion = parametros.descripcion; 
+            modeloEmpresa.rol = 'Empresa';    
+        
+                modeloEmpresa.password = passwordEncryptada
+                modeloEmpresa.save((err, empresaGuardada)=>{
+                    if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
+                    if(!empresaGuardada) return res.status(500).send({mensaje: 'Hubo un error al agregar la empresa'})
+            
+                    return res.status(200).send({empresa: empresaGuardada})
+                })
+            })
+            
+            
+        
+        
+           
 
-        modeloEmpresa.password = passwordEncryptada
-        modeloEmpresa.save((err, empresaGuardada)=>{
-            if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
-            if(!empresaGuardada) return res.status(500).send({mensaje: 'Hubo un error al agregar la empresa'})
+
+    }else{
+        return res.status(500).send({mensaje: 'Solo los administradores pueden agregar las empresas'})
+    }
+
     
-            return res.status(200).send({empresa: empresaGuardada})
-        })
-    })
-    
-    
-
-
-   
 
 }
 function editarEmpresa(req, res){
@@ -67,15 +75,29 @@ function eliminarEmpresa(req, res){
 
 }
 function obtenerEmpresas(req, res){
+    rol = req.user.rol;
+
+    if(rol == 'Administrador'){
+
+            Empresa.find({}, (err, empresaEncontradas)=>{
+                if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
+                if(!empresaEncontradas) return res.status(500).send({mensaje: 'Hubo un error al obtener las empresas'})
+    
+                return res.status(200).send({empresa: empresaEncontradas})
+            })
+    
 
 
-        Empresa.find({}, (err, empresaEncontradas)=>{
-            if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
-            if(!empresaEncontradas) return res.status(500).send({mensaje: 'Hubo un error al obtener las empresas'})
+        }else{
+            Empresa.find({_id: req.user.sub}, (err, empresaEncontradas)=>{
+                if(err) return res.status(500).send({mensaje: 'Hubo un error en la peticion'})
+                if(!empresaEncontradas) return res.status(500).send({mensaje: 'Hubo un error al obtener las empresas'})
+    
+                return res.status(200).send({empresa: empresaEncontradas})
+            })
+            }
 
-            return res.status(200).send({empresa: empresaEncontradas})
-        })
-
+      
   
 }
 function agregarProductos(req, res){

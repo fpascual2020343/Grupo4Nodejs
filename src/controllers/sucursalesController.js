@@ -129,7 +129,13 @@ function obtenerProductos(req, res) {
             }
         }
     ]).exec((err, productosEncontrados) => {
-        return res.status(200).send({ productos: productosEncontrados[0].productos })
+        if(productosEncontrados[0] == null){
+            return res.status(500).send({ mensaje: 'No se encontro'})
+
+        }else{
+            return res.status(200).send({ productos: productosEncontrados[0].productos})
+
+        }
     })
 }
 function ObtenerSucursalId(req, res) {
